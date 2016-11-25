@@ -9,10 +9,18 @@ app.use(express.static(__dirname + '/public'));
 app.set('views', __dirname + '/views');
 app.set('view engine', 'ejs');
 
-app.get('/', function(request, response) {
+app.get('/', function(rq, res) {
     //console.log('test request');
-    response.send('this is testbot server');
+    //response.send('this is testbot server');
     //response.render('pages/index');
+    var events = req.body.entry[0].messaging;
+    for (i = 0; i < events.length; i++) {
+        var event = events[i];
+        if (event.message && event.message.text) {
+            sendMessage(event.sender.id, {text: "Echo: " + event.message.text});
+        }
+    }
+    res.sendStatus(200);
 });
 
 app.get('/webhook', function(request, response) {
