@@ -15,11 +15,11 @@ app.get('/', function(request, response) {
     //console.log('test request');
     response.send('this is testbot server');
     //response.render('pages/index');
-    if (request.query['hub.verify_token'] == 'verify_token')
+    /*if (request.query['hub.verify_token'] == 'verify_token')
         {
             res.send(request.query['hub.challenge']);
         }
-    response.send('Error , wrong validation');
+    response.send('Error , wrong validation');*/
 });
 
 app.get('/webhook', function(req, res) {
