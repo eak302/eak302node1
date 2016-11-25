@@ -9,18 +9,15 @@ app.use(express.static(__dirname + '/public'));
 app.set('views', __dirname + '/views');
 app.set('view engine', 'ejs');
 
-app.get('/', function(rq, res) {
+app.get('/', function(request, response) {
     //console.log('test request');
     //response.send('this is testbot server');
     //response.render('pages/index');
-    var events = req.body.entry[0].messaging;
-    for (i = 0; i < events.length; i++) {
-        var event = events[i];
-        if (event.message && event.message.text) {
-            sendMessage(event.sender.id, {text: "Echo: " + event.message.text});
+    if (request.query['hub.verify_token'] == 'verify_token')
+        {
+            res.send(request.query['hub.challenge']);
         }
-    }
-    res.sendStatus(200);
+    response.send('Error , wrong validation');
 });
 
 app.get('/webhook', function(request, response) {
@@ -41,22 +38,3 @@ app.listen(app.get('port'), function() {
 });
 
 
-
-// generic function sending messages
-function sendMessage(recipientId, message) {
-    request({
-        url: 'https://graph.facebook.com/v2.6/me/messages',
-        qs: {access_token: process.env.PAGE_ACCESS_TOKEN},
-        method: 'POST',
-        json: {
-            recipient: {id: recipientId},
-            message: message,
-        }
-    }, function(error, response, body) {
-        if (error) {
-            console.log('Error sending message: ', error);
-        } else if (response.body.error) {
-            console.log('Error: ', response.body.error);
-        }
-    });
-};
