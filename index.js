@@ -10,7 +10,9 @@ app.set('views', __dirname + '/views');
 app.set('view engine', 'ejs');
 
 app.get('/', function(request, response) {
-  response.render('pages/index');
+    console.log('test request');
+    //response.send('this is testbot server');
+    //response.render('pages/index');
 });
 
 app.get('/webhook', function(request, response) {
