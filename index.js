@@ -1,6 +1,8 @@
 var express = require('express');
 var app = express();
 
+//var verify_token = "";
+
 app.set('port', (process.env.PORT || 5000));
 
 app.use(express.static(__dirname + '/public'));
@@ -20,16 +22,21 @@ app.get('/', function(request, response) {
     response.send('Error , wrong validation');
 });
 
-app.get('/webhook', function(request, response) {
+app.get('/webhook', function(req, res) {
+    if (req.query['hub.verify_token'] === 'verify_token') {
+      res.send(req.query['hub.challenge']);
+    } else {
+      res.send('Error, wrong validation token');    
+    }
     //response.send('this is testbot server');
-    var events = req.body.entry[0].messaging;
+    /*var events = req.body.entry[0].messaging;
     for (i = 0; i < events.length; i++) {
         var event = events[i];
         if (event.message && event.message.text) {
             sendMessage(event.sender.id, {text: "Echo: " + event.message.text});
         }
     }
-    res.sendStatus(200);
+    res.sendStatus(200);*/
    //response.send(cool()); 
 });
 
