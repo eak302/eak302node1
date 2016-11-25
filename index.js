@@ -14,7 +14,7 @@ app.get('/', function(request, response) {
 });
 
 app.get('/webhook', function(request, response) {
-    response.send('this is testbot server');
+    //response.send('this is testbot server');
     var events = req.body.entry[0].messaging;
     for (i = 0; i < events.length; i++) {
         var event = events[i];
