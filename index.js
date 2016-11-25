@@ -13,7 +13,7 @@ app.set('view engine', 'ejs');
 
 app.get('/', function(request, response) {
     //console.log('test request');
-    //response.send('this is testbot server');
+    response.send('this is testbot server');
     //response.render('pages/index');
     if (request.query['hub.verify_token'] == 'verify_token')
         {
